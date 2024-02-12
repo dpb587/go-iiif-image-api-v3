@@ -1,0 +1,18 @@
+name: dev
+on:
+  push: {}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version:
+        - stable
+        - oldstable
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go-version }}
+      - run: go version
+      - run: go test -coverprofile=/dev/null ./...
